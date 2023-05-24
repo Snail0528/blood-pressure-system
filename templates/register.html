@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %} 【注册】 {% endblock %}
+
+{% block content %}
+{{super()}}
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <a href="/register"><b>血压数据</b>分析系统</a>
+  </div>
+
+  <div class="card">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg">注册一个新账号</p>
+
+      <form id="myForm" action="/register" method="post">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" name="username" placeholder="昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" name="email" placeholder="邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" name="password" placeholder="密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" name="confirm_password" placeholder="确&nbsp;认&nbsp;密&nbsp;码">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <!-- <input type="checkbox" id="agreeTerms" name="terms" value="agree"> -->
+              <!-- <label for="agreeTerms"> -->
+                已有帐号，去<a href="/login" class="text-center">登录</a>
+               <!-- I agree to the <a href="#">terms</a> -->
+              <!-- </label> -->
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">注册</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <!-- <div class="social-auth-links text-center">
+        <p>- OR -</p>
+        <a href="#" class="btn btn-block btn-primary">
+          <i class="fab fa-facebook mr-2"></i>
+          Sign up using Facebook
+        </a>
+        <a href="#" class="btn btn-block btn-danger">
+          <i class="fab fa-google-plus mr-2"></i>
+          Sign up using Google+
+        </a>
+      </div> -->
+
+      <!-- <a href="/login" class="text-center">已有帐号，去登陆</a> -->
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+<script>
+  const form = document.getElementById('myForm');
+  var formData = new FormData(form);
+
+  form.addEventListener('submit', (event) => {
+    formData = new FormData(form);
+    event.preventDefault(); // 阻止表单默认提交事件
+    const inputs = form.querySelectorAll('input');
+    let isFormValid = true;
+    inputs.forEach(input => {
+      if (!input.value) {
+        isFormValid = false;
+        input.classList.add('is-invalid');
+      } else {
+        input.classList.remove('is-invalid');
+        formData.append(input.name, input.value); // 将表单字段添加到FormData对象中
+      }
+    });
+
+    if (!isFormValid) {
+      event.preventDefault();
+      showAlert('请填写所有必填项！', 'warning');
+      return;
+    }
+
+    if (inputs[2].value != inputs[3].value) {
+      showAlert('确认密码不一致', 'error');
+      inputs[3].classList.add('is-invalid');
+      return;
+    }
+
+    fetch('/register', {
+      method: 'POST',
+      body: formData // 将表单数据作为请求体传递给后端
+    })
+    .then(response => response.json()) // 将响应数据转换为JSON对象
+    .then(data => {
+      console.log(data); // 处理后端返回的数据
+      if (data.status == 'success') {
+        showAlert(data.msg, 'success');
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1000);
+      } else {
+        showAlert(data.msg, 'error');
+        // setTimeout(() => {
+        //   window.location.href = "/register";
+        // }, 1000);
+        return;
+      }
+    })
+    .catch(error => console.error(error)); // 处理错误
+  });
+</script>
+</body>
+{% endblock %}

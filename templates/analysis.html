@@ -1,0 +1,463 @@
+{% extends 'navibar.html' %}
+
+{% block title %} 【个人中心】 {% endblock %}
+
+<body class="hold-transition sidebar-mini layout-fixed">
+{% block inner_content %}
+{{ super() }}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>数据分析</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">首页</a></li>
+              <li class="breadcrumb-item active">数据分析</li>
+            </ol>
+            <div class="btn-group float-sm-right" style="margin-right: 20px; margin-top: -5px;">
+              <button type="button" id="button-select-confirm" class="btn btn-info"></button>
+              <button type="button" id="button-select-drop" class="btn btn-info dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown" style="margin-left: 1px;">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu" role="menu">
+                <!-- <div class="dropdown-divider"></div> -->
+                <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  聚类散点图
+                </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 500px;">
+                      <!-- <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas> -->
+                      <div id="chart" style="width: 100%; height: 100%;"></div>
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+                      <div class="col-md-12">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  聚类雷达图
+                </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="radar-chart" style="position: relative; height: 500px;">
+                      <!-- <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas> -->
+                      <div id="chart" style="width: 100%; height: 100%;"></div>
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">结果分析</h3>
+              </div>
+              <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> <b class='rfm-name'></b>（占比<b class="rfm-rate"></b>%）</strong>
+
+                <p class="text-muted">
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> <b class='rfm-name'></b>（占比<b class="rfm-rate"></b>%）</strong>
+
+                <p class="text-muted">Malibu, California</p>
+
+                <hr>
+
+                <strong><i class="fas fa-pencil-alt mr-1"></i> <b class='rfm-name'></b>（占比<b class="rfm-rate"></b>%）</strong>
+
+                <p class="text-muted">
+                  <!-- <span class="tag tag-danger">UI Design</span>
+                  <span class="tag tag-success">Coding</span>
+                  <span class="tag tag-info">Javascript</span>
+                  <span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-primary">Node.js</span> -->
+                </p>
+
+                <hr>
+
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}
+</div>
+<!-- ./wrapper -->
+
+{% block script %}
+{{ super() }}
+<script src="//cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+<script>
+
+var schema = [
+  { name: '收缩压', index: 1, text: '收缩压' },
+  { name: '舒张压', index: 2, text: '舒张压' },
+  { name: '脉压差', index: 3, text: '脉压差' },
+  { name: '心率', index: 4, text: '心率' },
+  { name: '身高', index: 5, text: '身高' },
+  { name: '体重', index: 6, text: '体重' },
+  { name: '类别', index: 7, text: '类别' },
+  { name: '姓名', index: 8, text: '姓名' },
+  { name: '年龄', index: 0, text: '年龄' },
+];
+var itemStyle = {
+  opacity: 0.8,
+  shadowBlur: 10,
+  shadowOffsetX: 0,
+  shadowOffsetY: 0,
+  shadowColor: 'rgba(0,0,0,0.3)'
+};
+option = {
+  color: ['#dd4444', '#fec42c', '#80F1BE'],
+  legend: {
+    top: 10,
+    data: ['cluster 1', 'cluster 2', 'cluster 3'],
+    textStyle: {
+      fontSize: 16
+    }
+  },
+  grid: {
+    left: '10%',
+    right: 150,
+    top: '18%',
+    bottom: '10%'
+  },
+  tooltip: {
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    formatter: function (param) {
+      var value = param.value;
+      return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
+                + param.seriesName + ' ' + value[8]
+                + '</div>'
+                + schema[1].text + '：' + value[1] + '<br>'
+                + schema[2].text + '：' + value[2] + '<br>'
+                + schema[3].text + '：' + value[3] + '<br>'
+                + schema[4].text + '：' + value[4] + '<br>'
+                + schema[5].text + '：' + value[5] + '<br>'
+                + schema[6].text + '：' + value[6] + '<br>'
+                + schema[7].text + '：' + value[7] + '<br>'
+    }
+  },
+  xAxis: {
+    type: 'value',
+    name: '收缩压',
+    nameGap: 16,
+    nameTextStyle: {
+      fontSize: 16
+    },
+    splitLine: {
+      show: false
+    }
+  },
+  yAxis: {
+    type: 'value',
+    name: '舒张压',
+    nameLocation: 'end',
+    nameGap: 20,
+    nameTextStyle: {
+      fontSize: 16
+    },
+    splitLine: {
+      show: false
+    }
+  },
+  visualMap: [
+    {
+      left: 'right',
+      top: '10%',
+      dimension: 1,
+      itemWidth: 30,
+      itemHeight: 120,
+      calculable: true,
+      min: 120,
+      max: 200,
+      precision: 0.1,
+      text: ['圆形大小：收缩压'],
+      textGap: 30,
+      inRange: {
+        symbolSize: [10, 70]
+      },
+      outOfRange: {
+        symbolSize: [10, 70],
+        color: ['rgba(255,255,255,0.4)']
+      },
+      controller: {
+        inRange: {
+          color: ['#c23531']
+        },
+        outOfRange: {
+          color: ['#999']
+        }
+      }
+    },
+    {
+      left: 'right',
+      bottom: '5%',
+      dimension: 4,
+      itemHeight: 120,
+      max: 100,
+      min: 0,
+      text: ['明暗：心率'],
+      textGap: 30,
+      inRange: {
+        colorLightness: [0.9, 0.5]
+      },
+      outOfRange: {
+        color: ['rgba(255,255,255,0.4)']
+      },
+      controller: {
+        inRange: {
+          color: ['#c23531']
+        },
+        outOfRange: {
+          color: ['#999']
+        }
+      }
+    }
+  ],
+  series: [
+    {
+      name: 'cluster 1',
+      type: 'scatter',
+      itemStyle: itemStyle,
+      data: []
+    },
+    {
+      name: 'cluster 2',
+      type: 'scatter',
+      itemStyle: itemStyle,
+      data: []
+    },
+    {
+      name: 'cluster 3',
+      type: 'scatter',
+      itemStyle: itemStyle,
+      data: []
+    }
+  ]
+};
+
+let radarOption = {
+  title: {
+    text: ''
+  },
+  legend: {
+    data: ['Allocated Budget', 'Actual Spending']
+  },
+  radar: {
+    // shape: 'circle',
+    indicator: [
+      { name: 'Sales', max: 6500 },
+      { name: 'Administration', max: 16000 },
+      { name: 'Information Technology', max: 30000 },
+    ]
+  },
+  series: [
+    {
+      name: 'Budget vs spending',
+      type: 'radar',
+      data: [
+        {
+          value: [4200, 3000, 20000, 35000, 50000, 18000],
+          name: 'Allocated Budget'
+        },
+        {
+          value: [5000, 14000, 28000, 26000, 42000, 21000],
+          name: 'Actual Spending'
+        }
+      ]
+    }
+  ]
+};
+
+let navibars = document.querySelectorAll('.nav-sidebar li a');
+navibars[3].classList.add('active');
+let confirmButton = document.getElementById('button-select-confirm');
+// 页面加载时调用接口，获取列表
+fetch('/get_analysis_history')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    if (!response[0]) {
+      confirmButton.parentElement.style.display = 'none';
+      showAlert('没有分析数据，请先导入报表进行分析！', 'danger');
+      setTimeout(() => {
+        window.location.href =  '/patient';
+      }, 1000);
+      return;
+    }
+    // 将列表第一个值给button-select-confirm，并将data属性赋值为第一个值
+    confirmButton.textContent = formatDate(response[0]);
+    confirmButton.data = '';
+    // 所有的值填充到button-select-drop下拉菜单中，并将data属性赋值为对应值
+    var dropdownMenu = document.querySelector('#button-select-drop + .dropdown-menu');
+    var firstItem = document.createElement('a');
+    response.forEach(function(value, index) {
+      var item = firstItem;
+      if (index > 1) {
+        item = document.createElement('a');
+      }
+      item.classList.add('dropdown-item');
+      item.textContent = formatDate(value);
+      item.addEventListener('click', () => {
+        const option = item.data;
+        if (confirmButton.data == option) {
+          return;
+        }
+        confirmButton.data = option;
+        confirmButton.textContent = formatDate(option);
+        changeSelete(option);
+      });
+      item.data = value;
+      dropdownMenu.appendChild(item);
+    });
+    return firstItem;
+  })
+  .then(function(firstItem) {
+    firstItem.click();
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+
+let rfm_names = document.getElementsByClassName('rfm-name');
+let rfm_rates = document.getElementsByClassName('rfm-rate');
+let text_muted = document.getElementsByClassName('text-muted');
+let contents = {
+  '正常': '收缩压较低（平均{count}）；舒张压较低（平均{amount}）；平均年龄为{days}；这部分患者需要保持良好的生活习惯。',
+  '低血压患者': '收缩压较高（平均{count}）；舒张压较高（平均{amount}）；平均年龄为{days}；这部分患者需要注意多休息，注意运动，合理饮食。',
+  '高血压患者': '收缩压高（平均{count}）；舒张压高（平均{amount}）；平均年龄为{days}；这部分患者需要改掉不良生活习惯，注意清淡饮食，勤加锻炼。',
+}
+console.log(rfm_names, rfm_rates);
+
+// 定义button-select-confirm点击事件
+function changeSelete(text) {
+  var selectedFile = text;
+  // 如果data属性为空，则直接返回
+  if (!selectedFile) {
+    return;
+  }
+  // 点击将文件传递给后端接口，并获取返回值
+  fetch('/get_analysis_data', {
+    method: 'POST',
+    body: JSON.stringify({ export_id: selectedFile }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    console.log(response['data'])
+    rfm_data = response['data']['rfm_data'];
+    rfm_result = response['data']['rfm_result'];
+
+    let myChart = echarts.init(document.getElementById('chart'));
+    let radarChart = echarts.init(document.getElementById('radar-chart'));
+    let radarLabels = [];
+    let radarData = [];
+    let rMax, fMax, mMax, oneMax, twoMax, threeMax = 0;
+    rfm_result.forEach(function(value, index) {
+      radarLabels.push(value[0]);
+      radarData.push({
+        'name': value[0],
+        'value': [value[1][1], value[1][2], value[1][3], value[1][5], value[1][6], value[1][7]],
+      })
+      if (value[1][1] > rMax) {rMax = value[1][1]};
+      if (value[1][2] > fMax) {fMax = value[1][2]};
+      if (value[1][3] > mMax) {mMax = value[1][3]};
+      if (value[1][5] > oneMax) {oneMax = value[1][5]};
+      if (value[1][6] > twoMax) {twoMax = value[1][6]};
+      if (value[1][7] > threeMax) {threeMax = value[1][7]};
+
+      option.series[index]['data'] = rfm_data[value[0]];
+      option.series[index]['name'] = value[0];
+      rfm_names[index].textContent = value[0];
+      rfm_rates[index].textContent = parseInt(value[1][9] * 100);
+      text_muted[index].textContent = contents[value[0]].replace(/\{count\}/g, value[1][7]).replace(/\{amount\}/g, value[1][6]).replace(/\{days\}/g, value[1][1]);
+    });
+    let indicator = [
+      {'name': '年龄', 'max': rMax},
+      {'name': '身高', 'max': fMax},
+      {'name': '体重', 'max': mMax},
+      {'name': '心率', 'max': oneMax},
+      {'name': '舒张压', 'max': twoMax},
+      {'name': '收缩压', 'max': threeMax},
+    ]
+    radarOption.series[0].data = radarData;
+    radarOption.radar.indicator = indicator;
+    radarOption.legend.data = radarLabels;
+    radarChart.setOption(radarOption, true);
+    myChart.setOption(option, true);
+    $(window).resize(function () {
+      myChart.resize();
+      radarChart.resize();
+    });
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+};
+</script>
+{% endblock %}

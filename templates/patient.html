@@ -1,0 +1,293 @@
+{% extends 'navibar.html' %}
+
+{% block title %} 【患者管理】 {% endblock %}
+{% block head %}
+{{super()}}
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/utils.css') }}">
+</head>
+{% endblock %}
+
+<body class="hold-transition sidebar-mini layout-fixed">
+{% block content %}
+{{ super() }}
+{% endblock %}
+{% block inner_content %}
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>患者管理</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">首页</a></li>
+              <li class="breadcrumb-item active">患者管理</li>
+            </ol>
+            <div class="btn-group float-sm-right" style="margin-right: 20px; margin-top: -5px;">
+              <button type="button" id="button-select-confirm" class="btn btn-info"></button>
+              <button type="button" id="button-select-drop" class="btn btn-info dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown" style="margin-left: 1px;">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu" role="menu">
+                <!-- <div class="dropdown-divider"></div> -->
+                <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <!-- Main content -->
+            <div class="card">
+              <div class="invoice p-3 mb-3">
+                <div class="row no-print">
+                  <div class="col-12">
+                    <!-- <div class="form-group"> -->
+                    <div class="col-12">
+                      <!-- <label for="file-input">上传文件</label> -->
+                      <button id="file-upload" type="button" class="btn btn-primary float-right">
+                        <i class="fas fa-download"></i> 导入Excel
+                      </button>
+                      <label for="file-input" id="file-name" class="float-right" style="margin-right: 20px;">选择文件</label>
+                      <!-- <input for="file-input" id="file-name" class="form-control float-right" style="margin-right: 20px; border-top-left-radius: 0; border-bottom-left-radius: 0;display: inline-block;"> -->
+                      <button type="button" id="file-label" class="btn btn-primary float-right">
+                        <i class="fas fa-file"></i> 
+                      </button>
+                      <input type="file" id="file-input" name="file" accept=".xlsx" class="form-control-file float-right col-md-3">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="card-header"> -->
+                <!-- <h3 class="card-title">DataTable with default features</h3> -->
+              <!-- </div> -->
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+{% endblock %}
+</div>
+<!-- ./wrapper -->
+{% block script %}
+ {{ super() }}
+ <!-- App Utils -->
+ <script src={{ url_for('static', filename="js/utils.js") }}></script>
+ <!-- DataTables  & Plugins -->
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables/jquery.dataTables.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-buttons/js/buttons.bootstrap4.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/jszip/jszip.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/pdfmake/pdfmake.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/pdfmake/vfs_fonts.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js") }}"></script>
+ <script src="{{ url_for('static', filename="AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js") }}"></script>
+ <script>
+  let navibars = document.querySelectorAll('.nav-sidebar li a');
+  navibars[1].classList.add('active');
+  let confirmButton = document.getElementById('button-select-confirm');
+  const fileInput = document.getElementById("file-input");
+  const fileLabel = document.getElementById("file-label");
+
+  fileLabel.addEventListener("click", function () {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener("change", function () {
+    console.log("选择了文件: ", fileInput.files[0], document.getElementById("file-input").files[0].name);
+    var fileName = document.getElementById("file-input").files[0].name;
+    document.getElementById("file-name").textContent = fileName;
+  });
+
+  const uploadFile = () => {
+    // const fileInput = document.getElementById('file-input');
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    if (!file) {
+      console.log(file)
+      showAlert('未选择文件！', 'warning');
+      return;
+    }
+    
+    fetch('/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      // 处理上传成功后的响应
+      showAlert(data.msg, data.status);
+      return data;
+    })
+    .then(data => {
+      setTimeout(() => {
+        window.location.href = "/patient";
+      }, 1000);
+    })
+    .catch(error => {
+      // 处理上传失败后的错误
+      console.error(error);
+    });
+  }
+  // 页面加载时调用接口，获取列表
+fetch('/get_analysis_history')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    if (!response[0]) {
+      confirmButton.parentElement.style.display = 'none';
+      return;
+    }
+    // 将列表第一个值给button-select-confirm，并将data属性赋值为第一个值
+    confirmButton.textContent = formatDate(response[0]);
+    confirmButton.data = '';
+    // 所有的值填充到button-select-drop下拉菜单中，并将data属性赋值为对应值
+    var dropdownMenu = document.querySelector('#button-select-drop + .dropdown-menu');
+    var firstItem = document.createElement('a');
+    response.forEach(function(value, index) {
+      var item = firstItem;
+      if (index > 1) {
+        var item = document.createElement('a');
+      }
+      item.classList.add('dropdown-item');
+      item.textContent = formatDate(value);
+      item.addEventListener('click', () => {
+        const option = item.data;
+        if (confirmButton.data == option) {
+          return;
+        }
+        confirmButton.data = option;
+        confirmButton.textContent = formatDate(option);
+        changeSelete(option);
+      });
+      item.data = value;
+      dropdownMenu.appendChild(item);
+    });
+    return firstItem;
+  })
+  .then(function(firstItem) {
+    firstItem.click();
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+
+// 定义button-select-confirm点击事件
+function changeSelete(text) {
+  var selectedFile = text;
+  // 如果data属性为空，则直接返回
+  if (!selectedFile) {
+    return;
+  }
+  // 点击将文件传递给后端接口，并获取返回值
+  fetch('/get_patient_data', {
+    method: 'POST',
+    body: JSON.stringify({ export_id: selectedFile }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    console.log(response['data']);
+    data = response['data'];
+    // 获取表格元素
+    const table = document.getElementById("example1");
+    while (table.firstChild) {
+      table.removeChild(table.firstChild);
+    }
+
+    // 添加表头
+    const thead = table.createTHead();
+    const headerRow = thead.insertRow();
+    data['labels'].forEach(label => {
+      const th = document.createElement("th");
+      const text = document.createTextNode(label);
+      th.appendChild(text);
+      headerRow.appendChild(th);
+    });
+
+    // 添加数据行
+    const tbody = table.createTBody();
+    console.log(data);
+    data['data'].forEach(rowData => {
+      const row = tbody.insertRow();
+      rowData.forEach(function(cellData, index) {
+        console.log(index, cellData)
+        const cell = row.insertCell();
+        let text = null;
+        if (index == 0) {
+          text = document.createElement('a');
+          text.innerHTML = cellData;
+          text.setAttribute('href', '/predict?export_time=' + document.getElementById("button-select-confirm").textContent + '&patient_name=' + cellData);
+        } else {
+          text = document.createTextNode(cellData);
+        }
+        cell.appendChild(text);
+      });
+    });
+  })
+  .then(function(response) {
+    var table = $('#example1').DataTable();
+    // destroy existing DataTable instance
+    table.destroy();
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "print"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+};
+
+  const submitBtn = document.getElementById('file-upload');
+  submitBtn.addEventListener('click', uploadFile);
+
+  confirmButton.click();
+  // $(function () {
+  //   $("#example1").DataTable({
+  //     "responsive": true, "lengthChange": false, "autoWidth": false,
+  //     "buttons": ["copy", "csv", "excel", "print"]
+  //   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  // });
+</script>
+{% endblock %}
+
+</body>

@@ -1,0 +1,259 @@
+{% extends 'navibar.html' %}
+
+{% block title %} 【患者详情】 {% endblock %}
+
+<body class="hold-transition sidebar-mini layout-fixed">
+{% block inner_content %}
+{{ super() }}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>患者详情</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">首页</a></li>
+              <li class="breadcrumb-item"><a href="/patient">返回</a></li>
+              <li class="breadcrumb-item active">患者详情</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- <div class="col-md-3"> -->
+          <div class="col-md-12">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <!-- <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="{{ url_for("static", filename="uploads/" + (user.avatar if user.avatar else "static/default.jpg")) }}"
+                       alt="User profile picture">
+                </div> -->
+
+                <!-- <h3 class="profile-username text-center">{{ user.username }}</h3> -->
+
+                <!-- <p class="text-muted text-center">{{ user.sig or '很个性，不需要签名' }}</p> -->
+
+                <ul class="list-group list-group-unbordered mb-3" id="patient-info">
+                  <li class="list-group-item">
+                    <b>姓名</b> <a class="float-right">{{ patient_data.patient_name }}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>性别</b> <a class="float-right">{{ patient_data.gender }}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>身高</b> <a class="float-right">{{ patient_data.height }}厘米</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>体重</b> <a class="float-right">{{ patient_data.weight }}千克</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>年龄</b> <a class="float-right">{{ patient_data.age }}岁</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>血压情况</b> <a class="float-right">{{ patient_data.cate }}</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  历史趋势
+                </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="history-chart" style="position: relative; height: 500px;">
+                      <!-- <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas> -->
+                      <div id="chart" style="width: 100%; height: 100%;"></div>
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+            <!-- /.card -->
+                        <!-- Custom tabs (Charts with tabs)-->
+              </div>
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  预测趋势
+                </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="predict-chart" style="position: relative; height: 500px;">
+                      <!-- <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas> -->
+                      <div id="chart" style="width: 100%; height: 100%;"></div>
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+
+            <!-- About Me Box -->
+            <!-- <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">About Me</h3>
+              </div>
+              <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                <p class="text-muted">
+                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                <p class="text-muted">Malibu, California</p>
+
+                <hr>
+
+                <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                <p class="text-muted">
+                  <span class="tag tag-danger">UI Design</span>
+                  <span class="tag tag-success">Coding</span>
+                  <span class="tag tag-info">Javascript</span>
+                  <span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-primary">Node.js</span>
+                </p>
+
+                <hr>
+
+                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+              </div>
+            </div> -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}
+</div>
+<!-- ./wrapper -->
+
+{% block script %}
+{{ super() }}
+<script src="//cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+<script>
+  let oldData = {{ old_data|tojson }};
+  let predictData = {{ predict_data|tojson }};
+  console.log(oldData, predictData)
+
+  option = {
+    title: {
+      text: ''
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: []
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        name: '收缩压',
+        type: 'line',
+        stack: null,
+        data: []
+      },
+      {
+        name: '舒张压',
+        type: 'line',
+        stack: null,
+        data: []
+      },
+      {
+        name: '心率',
+        type: 'line',
+        stack: null,
+        data: []
+      },
+    ]
+  };
+  let historyChart = echarts.init(document.getElementById('history-chart'));
+  let predictChart = echarts.init(document.getElementById('predict-chart'));
+
+  option.xAxis.data = oldData.labels;
+  option.series[0].data = oldData.data[0];
+  option.series[1].data = oldData.data[1];
+  option.series[2].data = oldData.data[2];
+  historyChart.setOption(option, true);
+
+  option.xAxis.data = predictData.labels;
+  option.series[0].data = predictData.data[0];
+  option.series[1].data = predictData.data[1];
+  option.series[2].data = predictData.data[2];
+  predictChart.setOption(option, true);
+
+  $(window).resize(function () {
+    historyChart.resize();
+    predictChart.resize();
+  });
+  let navibars = document.querySelectorAll('.nav-sidebar li a');
+  navibars[1].classList.add('active');
+  logoutEventBind();
+</script>
+{% endblock %}

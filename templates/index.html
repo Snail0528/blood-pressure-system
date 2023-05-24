@@ -1,0 +1,565 @@
+{% extends 'navibar.html' %}
+
+{% block title %} 【首页】 {% endblock %}
+
+<body class="hold-transition sidebar-mini layout-fixed">
+{% block inner_content %}
+{{ super() }}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div id="content" class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">数据看板</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">首页</a></li>
+              <li class="breadcrumb-item active">数据看板</li>
+            </ol>
+            <div class="btn-group float-sm-right" style="margin-right: 20px; margin-top: -5px;">
+              <button type="button" id="button-select-confirm" class="btn btn-info"></button>
+              <button type="button" id="button-select-drop" class="btn btn-info dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown" style="margin-left: 1px;">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu" role="menu">
+                <!-- <div class="dropdown-divider"></div> -->
+                <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+              </div>
+            </div>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>150</h3>
+
+                <p>患者人数</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="/patient" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p>总测量次数</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="patient" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>恢复健康患者数</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="patient" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>高血压患者占比</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="patient" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-12 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <!-- <div class="card bg-gradient-success"> -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  年龄-血压关系图
+                </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                   </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+          </section>
+
+            <section class="col-lg-12 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <!-- <div class="card bg-gradient-warning"> -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-chart-pie mr-1"></i>
+                  血压类型人群分布
+                </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="sales-chart" style="position: relative; height: 300px;">
+                    <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                  </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-12 connectedSortable">
+
+            <!-- solid sales graph -->
+            <!-- <div class="card bg-gradient-info"> -->
+            <div class="card">
+              <div class="card-header border-0">
+                <h3 class="card-title">
+                  <i class="fas fa-th mr-1"></i>
+                  心率-血压分布图
+                </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer bg-transparent">
+                <div class="row">
+                  <div class="col-6 text-center">
+                    <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                           data-fgColor="#39CCCC">
+
+                    <div class="text-info">恢复健康患者</div>
+                  </div>
+                  <!-- ./col -->
+                  <div class="col-6 text-center">
+                    <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
+                           data-fgColor="#39CCCC">
+
+                    <div class="text-info">高血压患者</div>
+                  </div>
+                  <!-- ./col -->
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </section>
+          <!-- right col -->
+        </div>
+        <!-- this row will not appear when printing -->
+        <div class="row no-print" style="padding-bottom: 20px;">
+          <div class="col-12">
+            <button id="pdf-button" type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+              <i class="fas fa-download"></i> 生成PDF
+            </button>
+          </div>
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock %}
+{% block script %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/jspdf.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/html2canvas.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+
+<script>
+var salesGraphChartData = {
+  labels: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2', '2012 Q3', '2012 Q4', '2013 Q1', '2013 Q2'],
+  datasets: [
+    {
+      label: '收缩压',
+      fill: false,
+      borderWidth: 2,
+      lineTension: 0,
+      spanGaps: true,
+      borderColor: '#00a65a',
+      pointRadius: 3,
+      pointHoverRadius: 7,
+      pointColor: '#00a65a',
+      pointBackgroundColor: '#00a65a',
+      data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
+    },
+    {
+      label: '舒张压',
+      fill: false,
+      borderWidth: 2,
+      lineTension: 0,
+      spanGaps: true,
+      borderColor: '#a0a65a',
+      pointRadius: 3,
+      pointHoverRadius: 7,
+      pointColor: '#a0a65a',
+      pointBackgroundColor: '#a0a65a',
+      data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
+    }
+  ]
+}
+
+var salesChartData = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  datasets: [
+    {
+      label: '收缩压',
+      backgroundColor: 'rgba(60,141,188,0.9)',
+      borderColor: 'rgba(60,141,188,0.8)',
+      pointRadius: true,
+      // pointStrokeColor: 'rgba(60,141,188,1)',
+      // pointColor: 'rgba(210, 214, 222, 1)',
+      pointStrokeColor: '#fff',
+      pointColor: '#fff',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(60,141,188,1)',
+      data: [28, 48, 40, 19, 86, 27, 90]
+    },
+    {
+      label: '舒张压',
+      backgroundColor: 'rgba(210, 214, 222, 1)',
+      borderColor: 'rgba(210, 214, 222, 1)',
+      pointRadius: true,
+      pointColor: 'rgba(110, 214, 222, 1)',
+      pointStrokeColor: '#c1c7d1',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(220,220,220,1)',
+      data: [65, 59, 80, 81, 56, 55, 40]
+    },
+    {
+      label: '心率',
+      backgroundColor: 'rgba(110, 214, 222, 1)',
+      borderColor: 'rgba(110, 214, 222, 1)',
+      pointRadius: true,
+      pointColor: '#3b8bba',
+      pointStrokeColor: '#c1c7d1',
+      pointHighlightFill: '#fff',
+      pointHighlightStroke: 'rgba(220,220,220,1)',
+      data: [35, 29, 10, 81, 56, 55, 40]
+    },
+  ]
+}
+
+var confirmButton = document.getElementById('button-select-confirm');
+var boxs = document.querySelectorAll('.small-box h3');
+var circles = document.querySelectorAll('.knob + .text-info');
+var circle_values = document.querySelectorAll('input.knob');
+
+/* pdfButton.addEventListener('click', function() {
+  fetch('/export_to_pdf')
+    .then(response => response.blob())
+    .then(blob => {
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'export.pdf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    })
+    .catch(error => {
+      console.error(error);
+    })
+}) */
+
+let pdfButton = document.getElementById('pdf-button')
+pdfButton.addEventListener("click", () => {
+  const content = document.getElementById("content");
+  downloadPDF(content);
+});
+
+// 页面加载时调用接口，获取列表
+fetch('/get_analysis_history')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    if (!response[0]) {
+      confirmButton.parentElement.style.display = 'none';
+      showAlert('没有分析数据，请先导入报表进行分析！', 'danger');
+      setTimeout(() => {
+        window.location.href =  '/patient';
+      }, 1000);
+      return;
+    }
+    // 将列表第一个值给button-select-confirm，并将data属性赋值为第一个值
+    confirmButton.textContent = formatDate(response[0]);
+    //confirmButton.data = response[0];
+    confirmButton.data = '';
+    // 所有的值填充到button-select-drop下拉菜单中，并将data属性赋值为对应值
+    var dropdownMenu = document.querySelector('#button-select-drop + .dropdown-menu');
+    var firstItem = document.createElement('a');
+    response.forEach(function(value, index) {
+      var item = firstItem;
+      if (index > 0) {
+        var item = document.createElement('a');
+      }
+      item.classList.add('dropdown-item');
+      item.textContent = formatDate(value);
+      item.addEventListener('click', () => {
+        const option = item.data;
+        if (confirmButton.data == option) {
+          return;
+        }
+        confirmButton.data = option;
+        confirmButton.textContent = formatDate(option);
+        changeSelete(option);
+      });
+      item.data = value;
+      dropdownMenu.appendChild(item);
+    });
+    console.log(dropdownMenu)
+    // dropdownMenu.firstChild.click();
+    return firstItem;
+  })
+  .then(function(firstItem) {
+    firstItem.click();
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+
+
+// 定义button-select-confirm切换事件
+// confirmButton.addEventListener('change', function(event) {
+// const observer = new MutationObserver(function(mutationsList) {
+function changeSelete(text) {
+  var selectedFile = text;
+  // 如果data属性为空，则直接返回
+  if (!selectedFile) {
+    return;
+  }
+  let navibars = document.querySelectorAll('.nav-sidebar li a');
+  navibars[0].classList.add('active');
+  // 点击将文件传递给后端接口，并获取返回值
+  fetch('/get_analysis_data', {
+    method: 'POST',
+    body: JSON.stringify({ export_id: selectedFile }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(response) {
+    console.log(response['data']);
+    analysis_data = response['data']['analysis_data'];
+    var heartrate_info = analysis_data['heartrate_info'];
+    var age_avg_info = analysis_data['age_avg_info']
+    var cate_info = analysis_data['cate_info'];
+    var pressure_info = analysis_data['pressure_info'];
+    boxs[0].textContent = analysis_data['patient_count'];
+    boxs[1].textContent = analysis_data['sample_count'];
+    boxs[2].textContent = analysis_data['normal_count'];
+    boxs[3].innerHTML = analysis_data['high_rate'] * 100 + '<sup style="font-size: 20px">%</sup>';
+    salesGraphChartData['labels'] = heartrate_info['labels'];
+    salesGraphChartData['datasets'][0]['data'] = heartrate_info['data'][0];
+    salesGraphChartData['datasets'][1]['data'] = heartrate_info['data'][1];
+
+    pieData['labels'] = cate_info['labels'];
+    pieData['datasets'][0]['data'] = cate_info['data'];
+
+    salesChartData['labels'] = age_avg_info['labels'];
+    salesChartData['datasets'][0]['data'] = age_avg_info['data'][0];
+    salesChartData['datasets'][1]['data'] = age_avg_info['data'][1];
+    salesChartData['datasets'][2]['data'] = age_avg_info['data'][2];
+
+    circles[0].innerHTML = pressure_info['labels'][0]
+    circles[1].innerHTML = pressure_info['labels'][1]
+    circle_values[0].value = pressure_info['data'][0]
+    circle_values[1].value = pressure_info['data'][1]
+    
+    var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
+      type: 'line',
+      data: salesGraphChartData,
+      options: salesGraphChartOptions
+    })
+    // Create pie or douhnut chart
+    var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
+      type: 'doughnut',
+      data: pieData,
+      options: pieOptions
+    })
+    // This will get the first returned node in the jQuery collection.
+    // eslint-disable-next-line no-unused-vars
+    var salesChart = new Chart(salesChartCanvas, { // lgtm[js/unused-local-variable]
+      type: 'line',
+      data: salesChartData,
+      options: salesChartOptions
+    })
+    $('.knob').knob();
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+}
+
+// Make the dashboard widgets sortable Using jquery UI
+$('.connectedSortable').sortable({
+  placeholder: 'sort-highlight',
+  connectWith: '.connectedSortable',
+  handle: '.card-header, .nav-tabs',
+  forcePlaceholderSize: true,
+  zIndex: 999999
+})
+$('.connectedSortable .card-header').css('cursor', 'move')
+
+
+// Sales chart
+var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+
+var salesChartOptions = {
+  maintainAspectRatio: false,
+  responsive: true,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      gridLines: {
+        display: false
+      }
+    }],
+    yAxes: [{
+      gridLines: {
+        display: false
+      }
+    }]
+  }
+}
+
+
+// Donut Chart
+var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
+var pieData = {
+  labels: [
+    'Instore Sales',
+    'Download Sales',
+    'Mail-Order Sales'
+  ],
+  datasets: [
+    {
+      data: [30, 12, 20, 11],
+      backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#491823']
+    }
+  ]
+}
+var pieOptions = {
+  legend: {
+    display: false
+  },
+  maintainAspectRatio: false,
+  responsive: true
+}
+
+// Sales graph chart
+var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d')
+
+var salesGraphChartOptions = {
+  maintainAspectRatio: false,
+  responsive: true,
+  legend: {
+    display: false
+  },
+  scales: {
+    xAxes: [{
+      ticks: {
+        fontColor: '#00a65a'
+      },
+      gridLines: {
+        display: false,
+        color: '#efefef',
+        drawBorder: false
+      }
+    }],
+    yAxes: [{
+      ticks: {
+        stepSize: 5000,
+        fontColor: '#00a65a'
+      },
+      gridLines: {
+        display: true,
+        color: '#cccccc',
+        drawBorder: false
+      }
+    }]
+  }
+}
+</script>
+{% endblock %}
+</body>

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %} 【登录】 {% endblock %}
+
+{% block content %}
+{{super()}}
+
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/login"><b>血压数据</b>分析系统</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">进入系统 开始分析</p>
+
+      <form id="myForm" action="/login" method="post">
+      <!-- <form id="myForm"> -->
+        <div class="input-group mb-3">
+          <input type="name" class="form-control" name="username" placeholder="用&nbsp;户&nbsp;名">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" name="password" placeholder="密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="remember" name="remember">
+              <label for="remember">
+                记住我
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">登录</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <!-- <div class="social-auth-links text-center mb-3"> -->
+        <!-- <p>- OR -</p> -->
+        <!-- <a href="#" class="btn btn-block btn-primary"> -->
+          <!-- <i class="fab fa-facebook mr-2"></i> Sign in using Facebook -->
+        <!-- </a> -->
+        <!-- <a href="#" class="btn btn-block btn-danger"> -->
+          <!-- <i class="fab fa-google-plus mr-2"></i> Sign in using Google+ -->
+        <!-- </a> -->
+      <!-- </div> -->
+      <!-- /.social-auth-links -->
+
+      <!-- <p class="mb-1"> -->
+        <!-- <a href="forgot-password.html">I forgot my password</a> -->
+      <!-- </p> -->
+      <p class="mb-0">
+        <a href="/register" class="text-center">注册一个新账号</a>
+      </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+<script>
+  const form = document.getElementById('myForm');
+  var formData = new FormData(form);
+  form.addEventListener('submit', (event) => {
+    formData = new FormData();
+    event.preventDefault(); // 阻止表单默认提交事件
+    const inputs = form.querySelectorAll('input');
+    let isFormValid = true;
+
+    inputs.forEach(input => {
+      if (!input.value) {
+        isFormValid = false;
+        input.classList.add('is-invalid');
+      } else {
+        input.classList.remove('is-invalid');
+        formData.append(input.name, input.value); // 将表单字段添加到FormData对象中
+      }
+    });
+
+    if (!isFormValid) {
+      event.preventDefault();
+      showAlert('请填写所有必填项！', 'warning');
+      return;
+    }
+
+    console.log(formData)
+    fetch('/login', {
+      method: 'POST',
+      body: formData // 将表单数据作为请求体传递给后端
+    })
+    .then(response => response.json()) // 将响应数据转换为JSON对象
+    .then(data => {
+      console.log(data); // 处理后端返回的数据
+      if (data.status == 'success') {
+        showAlert(data.msg, 'success');
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
+      } else {
+        showAlert(data.msg, 'error');
+        // setTimeout(() => {
+        //   window.location.href = "/login";
+        // }, 1000);
+        return;
+      }
+    })
+    .catch(error => console.log(error)); // 处理错误
+  });
+</script>
+
+</body>
+
+{% endblock %}

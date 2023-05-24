@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %} {% endblock %}</title>
+    {% block head %} 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href={{ url_for('static', filename="AdminLTE/plugins/fontawesome-free/css/all.min.css") }}>
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href={{ url_for('static', filename="AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css") }}>
+    <!-- Theme style -->
+    <link rel="stylesheet" href={{ url_for('static', filename="AdminLTE/dist/css/adminlte.min.css") }}>
+    {% endblock %}
+  </head>
+  <body>
+    {% block content %} 
+    <div class="alert alert-success alert-dismissible" role="alert" id="alert-box" style="display: none; position: fixed; top: 30px; left: 50%; transform: translate(-50%, 0); z-index: 1000000000">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong id="alert-message"></strong>
+    </div>
+    <div class="alert alert-danger alert-dismissible" role="alert" id="alert-box-error" style="display: none; position: fixed; top: 30px; left: 50%; transform: translate(-50%, 0); z-index: 1000000000">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong id="alert-message-error"></strong>
+    </div>
+    <div class="alert alert-warning alert-dismissible" role="alert" id="alert-box-warning" style="display: none; position: fixed; top: 30px; left: 50%; transform: translate(-50%, 0); z-index: 1000000000">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong id="alert-message-warning"></strong>
+    </div>
+    {% endblock %}
+  </body>
+    {% block script %} 
+    <!-- jQuery -->
+    <script src={{ url_for('static', filename="AdminLTE/plugins/jquery/jquery.min.js") }}></script>
+    <!-- Bootstrap 4 -->
+    <script src={{ url_for('static', filename="AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js") }}></script>
+    <!-- AdminLTE App -->
+    <script src={{ url_for('static', filename="AdminLTE/dist/js/adminlte.min.js") }}></script>
+    <!-- App Utils -->
+    <script src={{ url_for('static', filename="js/utils.js") }}></script>
+    {% endblock %}
+</html>

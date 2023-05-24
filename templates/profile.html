@@ -1,0 +1,124 @@
+{% extends 'navibar.html' %}
+
+{% block title %} 【个人中心】 {% endblock %}
+
+<body class="hold-transition sidebar-mini layout-fixed">
+{% block inner_content %}
+{{ super() }}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>个人中心</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">首页</a></li>
+              <li class="breadcrumb-item active">个人中心</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- <div class="col-md-3"> -->
+          <div class="col-md-12">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="{{ url_for("static", filename="uploads/" + (user.avatar if user.avatar else "static/default.jpg")) }}"
+                       alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">{{ user.username }}</h3>
+
+                <p class="text-muted text-center">{{ user.sig or '很个性，不需要签名' }}</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>邮箱</b> <a class="float-right">{{ user.email }}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>角色</b> <a class="float-right">{{ '普通用户' if user.is_admin == '0' else '管理员' }}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>注册时间</b> <a class="float-right">{{ user.created_at }}</a>
+                  </li>
+                </ul>
+
+                <button id="logout" class="btn btn-primary btn-block"><b>退出登录</b></button>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- About Me Box -->
+            <!-- <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">About Me</h3>
+              </div>
+              <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                <p class="text-muted">
+                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                <p class="text-muted">Malibu, California</p>
+
+                <hr>
+
+                <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                <p class="text-muted">
+                  <span class="tag tag-danger">UI Design</span>
+                  <span class="tag tag-success">Coding</span>
+                  <span class="tag tag-info">Javascript</span>
+                  <span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-primary">Node.js</span>
+                </p>
+
+                <hr>
+
+                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+              </div>
+            </div> -->
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock %}
+</div>
+<!-- ./wrapper -->
+
+{% block script %}
+{{ super() }}
+<script>
+  let navibars = document.querySelectorAll('.nav-sidebar li a');
+  navibars[2].classList.add('active');
+  logoutEventBind();
+</script>
+{% endblock %}
